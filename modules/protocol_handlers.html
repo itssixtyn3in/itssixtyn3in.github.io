@@ -9,7 +9,8 @@
 <body>
     <h1>RCE through Protocol Handlers</h1>
 <p>Let's talk about those fancy protocol handlers in Electron apps. They're like little helpers that can open web links in the default browser, which is pretty convenient. But here's the catch: if these handlers aren't guarded properly, they can become a hacker's playground. Imagine you click on a link within an Electron app, and it's supposed to open a web page. If that link isn't shielded, a sneaky attacker can craft it to do more than just open a page—they can execute malicious code on your computer. This is what we call Remote Code Execution (RCE), and it's bad news. Essentially, an attacker tricks the app into running their own code, potentially taking control of your system. So, protecting those protocol handlers is a must to keep Electron apps safe and secure.</p>
-<div id="commentContainer">
+Test payload: search-ms://query=*.exe&displayName=Protocol%20Handler%Demo%20Spoofed%Title
+    <div id="commentContainer">
         <!-- Comments will be displayed here -->
     </div>
     <input type="text" id="commentInput" placeholder="Enter your comment">
