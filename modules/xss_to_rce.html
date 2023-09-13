@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment Page</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>XSS to RCE</h1>
+<p>Unlike traditional web applications, where the impact of XSS is typically limited to client-side actions, Electron applications blend web technologies with native capabilities, making them especially susceptible to more severe RCE consequences.</p>
+<p>When an attacker successfully injects malicious JavaScript through an XSS vulnerability within an Electron app, they gain a foothold in an environment with direct access to the host system's resources and powerful native APIs. This foothold can allow the attacker to execute arbitrary code on the user's device, opening the door to a multitude of malicious actions. </p>
+<p>In Electron, to prevent XSS vulnerabilities from escalating into Remote Code Execution (RCE) scenarios, it's crucial to disable the nodeIntegration setting in Electron's BrowserWindow options. The nodeIntegration setting determines whether the Electron renderer process (which runs your web content) has access to Node.js modules and APIs, which can potentially be used maliciously to execute arbitrary code on the user's system.</p>
+<p>If you're wanting to determine if an Electron based application has nodeIntegration enabled, then you can usually find that in the applications main.js file (you will need to disassemble the ASAR file first). Here is a code snippet of this apps nodeIntegration configuration:</p>
+<code>
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      sandbox: false,
+      nodeIntegrationInSubFrames: false,
+      nativeWindowOpen: true,
+      enableRemoteModule: false,
+      spellcheck: true
+    },
+  });
+</code>
+<p>This Lab will allow you to practice XSS to RCE in electron applications by using a similar XSS payload that you've used before. The XSS will have to call the require function to spawn a new child process that will then start the calculator application on your machine. While the calculator app is fairly harmless, it's a great proof of concept to show that the application could be abused to take other malicious actions.</p>
+<p>You can find a list of RCE payloads for different operating systems at <a href='https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/xss-to-rce-electron-desktop-apps' target='_blank'>Hacktricks</a>
+<br>
+<div id="commentContainer">
+        <!-- Comments will be displayed here -->
+    </div>
+    <input type="text" id="commentInput" placeholder="Enter your comment">
+    <button id="submitButton">Submit</button>
+    <script src="scripts.js"></script>
+<br>
+<br>
+Payload: img src=x onerror="alert(require('child_process').execSync('calc').toString());"> 
+    <a href="../app/index.html">Back to the Main Screen</a>
+</body>
+</html>

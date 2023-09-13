@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Context Isolation</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>RCE through Context Isolation</h1>
+<p>Imagine Electron apps as having a protective wall that separates the web content from the deeper workings of the system. This "wall" is context isolation, and it's crucial for security. However, when developers disable context isolation, they essentially create a hole in that wall. This opens up a Pandora's box of security issues, with one of the most serious being the risk of Remote Code Execution (RCE). </p>
+<p>With context isolation turned off, web content in Electron apps can access the inner workings of the system. This means that if a malicious script from an external website finds its way into the app, it can potentially exploit vulnerabilities within Electron and run code on the user's computer. It's like giving an outsider the keys to your house, allowing them to take control of your computer and do malicious things. So, while there may be reasons to disable context isolation, developers must be super cautious and add extra security measures to prevent these sorts of attacks.</p>
+<p>To put it simply, when context isolation is disabled, Electron apps become more vulnerable to external scripts that could do serious damage. It's like leaving the front door of your house wide open for anyone to walk in. These external scripts can manipulate the app's features and even the user's computer. They might steal sensitive data or launch attacks that compromise the entire system.</p>
+<div id="commentContainer">
+        <!-- Comments will be displayed here -->
+    </div>
+    <input type="text" id="commentInput" placeholder="Enter your comment">
+    <button id="submitButton">Submit</button>
+    <script src="scripts.js"></script>
+<br>
+<br>
+    <a href="../app/index.html">Back to the Main Screen</a>
+</body>
+</html>

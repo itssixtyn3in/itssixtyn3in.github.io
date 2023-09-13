@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Context Isolation</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>BURP proxy setup</h1>
+<p>When it comes to making sure Electron applications are safe from potential security risks, being able to intercept requests using tools like BURP (Burp Suite) is a real game-changer. Electron apps are a blend of web technology and native computer abilities, which makes them a bit tricky to secure. Intercepting requests lets security experts get a sneak peek into how the app talks to external servers and services. It's like having x-ray vision to see what's happening behind the scenes. By doing this, testers can spot vulnerabilities that might otherwise go unnoticed, like problems with how data is protected or spots where hackers could sneak in bad code</p>
+<p>Once we have unpackaged an apps ASAR file we can start making some changes that will allow us to intercept the external interactions that the app makes. We can create a proxy server by adding the following to the main.js configuration file:
+<p><code>app.commandLine.appendSwitch('proxy-server', '127.0.0.1:8081')</code></p>
+<img src=../img/proxy_switch.jpg></img>
+<div id="commentContainer">
+        <!-- Comments will be displayed here -->
+    </div>
+    <input type="text" id="commentInput" placeholder="Enter your comment">
+    <button id="submitButton">Submit</button>
+    <script src="scripts.js"></script>
+<br>
+<br>
+    <a href="../app/index.html">Back to the Main Screen</a>
+</body>
+</html>

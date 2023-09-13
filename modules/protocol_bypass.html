@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment Page</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Protocol handler redirects</h1>
+<p>Picture this: Electron apps can sometimes allow themselves to be redirected to web pages that are powered by PHP, a popular web programming language. Now, normally, that's not a big issue. However, there's a tricky maneuver bad actors can pull off using something called a "301 redirect," and it's not good news. When you click on a link within an Electron app that's supposed to take you to a PHP page, an attacker can secretly set up a series of redirects. First, you're taken to the PHP page as expected, but that page can then send you off to another place entirely, maybe even to a completely different app or program on your computer, thanks to that 301 redirect trick.
+
+Here's why that's a problem: it's like if you were following a road map to a specific destination, but suddenly, someone messes with the signs and sends you down a completely different road to a place you didn't intend to visit. In the world of Electron apps, this can lead to some serious security concerns. Attackers could potentially exploit this redirection chain to take control of other programs or protocol handlers on your computer, which could result in unintended actions or even security breaches. So, Electron apps need to be really careful about how they handle external redirects to avoid these risky situations.</p>
+<div id="commentContainer">
+        <!-- Comments will be displayed here -->
+    </div>
+    <input type="text" id="commentInput" placeholder="Enter your comment">
+    <button id="submitButton">Submit</button>
+    <script src="scripts.js"></script>
+<br>
+<br>
+Payload: img src=x onerror="alert(require('child_process').execSync('calc').toString());"> 
+    <a href="../app/index.html">Back to the Main Screen</a>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Unpacking ASAR files</h1>
+    <p>ASAR (pronounced "a-sar") stands for "Atom Shell Archive." It's a packaging format used in Electron applications to bundle together various files, including JavaScript, HTML, CSS, and other assets, into a single archive. This archive format is similar to a ZIP file but optimized for Electron apps. ASAR files help streamline the distribution and loading of application resources, improving performance and efficiency. Electron apps often rely on these ASAR archives to package and organize their code and assets.</p>
+<p>For security researchers examining Electron apps for vulnerabilities, unpacking ASAR files is an essential step. The reason is that ASAR archives can obscure the underlying code and assets, making it challenging to analyze and identify security issues effectively. By unpacking ASAR files, researchers gain direct access to the application's source code, allowing them to inspect it thoroughly, identify potential security flaws, and assess the app's security posture. This level of access is crucial for understanding how an Electron app functions and for conducting comprehensive security audits, penetration testing, and vulnerability assessments. Without unpacking ASAR files, researchers would be limited in their ability to assess and uncover potential vulnerabilities, hindering their efforts to enhance the security of Electron applications.</p>
+<p>If you have NPM installed, then unpacking an ASAR file is very easy and can be accomplished with the following commands:</p>
+<p>npx asar extract app.asar destfolder</p>
+<p>npx asar extract-file app.asar main.js </p>
+<p>Once you have extracted the contents of the ASAR file, then you can start reviewing it for information like endpoints or functions that you would usually not know about. Keep in mind that javascript files will often be obfuscated, so tools like <a href=https://deobfuscate.io/>https://deobfuscate.io/</a> can be very helpful when it comes to making the formating readable again.
+<!-- Allow script tags in comments -->
+    <div id="commentContainer">
+        <!-- Comments will be displayed here -->
+    </div>
+
+    <input type="text" id="commentInput" placeholder="Enter your comment">
+    <button id="submitButton">Submit</button>
+    <script src="scripts.js"></script>
+
+    <p></p>
+    <a href="../app/index.html">Back to the Main Screen</a>
+</body>
+</html>
