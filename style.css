@@ -1,0 +1,35 @@
+/* Style the comment container */
+#commentContainer {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Style individual comments */
+.comment {
+    background-color: #FFD700; /* Lemonade yellow */
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+/* Style the input field and submit button */
+#commentInput {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #FFA500; /* Orange */
+    border-radius: 5px;
+}
+
+#submitButton {
+    background-color: #FFA500; /* Orange */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#submitButton:hover {
+    background-color: #FF8C00; /* Darker orange on hover */
+}
