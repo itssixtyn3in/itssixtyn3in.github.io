@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Animation</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #matrix-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            color: green;
+            font-family: monospace;
+            font-size: 18px;
+            white-space: nowrap;
+        }
+
+        .matrix-character {
+            position: absolute;
+            animation: fall 2s linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="matrix-container"></div>
+    <script>
+        function createMatrixAnimation() {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            const matrixContainer = document.getElementById('matrix-container');
+
+            function getRandomCharacter() {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                return characters[randomIndex];
+            }
+
+            function createMatrixCharacter() {
+                const character = document.createElement('span');
+                character.textContent = getRandomCharacter();
+                character.classList.add('matrix-character');
+                character.style.left = Math.random() * 100 + 'vw';
+                character.style.animationDelay = Math.random() * 5 + 's';
+
+                return character;
+            }
+
+            for (let i = 0; i < 100; i++) {
+                matrixContainer.appendChild(createMatrixCharacter());
+            }
+        }
+
+        createMatrixAnimation();
+
+        setTimeout(() => {
+            document.getElementById('matrix-container').style.display = 'none';
+        }, 5000); // Change the time here (in milliseconds) to control how long the animation runs.
+    </script>
+</body>
+</html>
