@@ -32,7 +32,7 @@
     margin-bottom: 10px;
     border: 1px solid #000; /* Thin black border */
     border-radius: 5px;
-    color: #fff; /* White font color */
+    color: #000000; /* White font color */
 }
 
 #submitButton {
