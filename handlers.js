@@ -17,7 +17,7 @@ submitButton.addEventListener('click', () => {
 
 // Detect and format all URLs in the comment text as hyperlinks, including flag://
 const formattedComment = userComment.replace(
-    /(https?:\/\/\S+|ftp:\/\/\S+|file:\/\/\S+|search-ms:\/\/\S+|flag:\/\/\S+)/gi,
+    /(https?:\/\/\S+|ftp:\/\/\S+|file:\/\/\S+|sftp:\/\/\S+|search-ms:\/\/\S+|flag:\/\/\S+)/gi,
     (match) => `<a href="${match}" target="_blank">${match}</a>`
 );
     // Set the innerHTML of the comment element with the formatted comment
