@@ -15,11 +15,11 @@ submitButton.addEventListener('click', () => {
     const commentElement = document.createElement('div');
     commentElement.classList.add('comment');
 
-    // Detect and format all URLs in the comment text as hyperlinks
-    const formattedComment = userComment.replace(
-        /(https?:\/\/\S+|ftp:\/\/\S+|file:\/\/\S+|search-ms:\/\/\S+)/gi,
-        (match) => `<a href="${match}" target="_blank">${match}</a>`
-    );
+// Detect and format all URLs in the comment text as hyperlinks, including flag://
+const formattedComment = userComment.replace(
+    /(https?:\/\/\S+|ftp:\/\/\S+|file:\/\/\S+|search-ms:\/\/\S+|flag:\/\/\S+)/gi,
+    (match) => `<a href="${match}" target="_blank">${match}</a>`
+);
     // Set the innerHTML of the comment element with the formatted comment
     commentElement.innerHTML = formattedComment;
 
