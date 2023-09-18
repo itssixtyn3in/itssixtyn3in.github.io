@@ -36,7 +36,7 @@
 }
 
 #submitButton {
-    background-color: #FFA500; /* Orange */
+    background-color: #F8D0BDff; /* Orange */
     color: #fff; /* White font color */
     border: none;
     padding: 10px 20px;
@@ -45,5 +45,5 @@
 }
 
 #submitButton:hover {
-    background-color: #FF8C00; /* Darker orange on hover */
+    background-color: #F8D0BDff; /* Darker orange on hover */
 }
