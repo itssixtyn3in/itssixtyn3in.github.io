@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fingerprinting Electron Apps</title>
+<link rel="stylesheet" href="https://itssixtyn3in.github.io/style.css">
+</head>
+<body>
+    <h1>Fingerprinting through External Actions</h1>
+    <p>Unfortunately you will not always be able to interrupt requests that an Electron application sends, but there are other ways of retrieving information like software versions. Electron applications can inadvertently reveal their version and potentially compromise security through external actions like handling links or custom URL schemes. This can be exploited by malicious actors for fingerprinting purposes, where they collect data about the application's behavior, version, or installed plugins. This information can be used to identify the user's software stack, potentially leading to targeted attacks or exploitation of known vulnerabilities in that specific Electron version or its associated dependencies</p>
+<p>To mitigate this danger, developers should carefully review how their Electron apps handle external actions and ensure that sensitive information is not inadvertently exposed. Implementing stricter controls on URL handling, validating and sanitizing input, and minimizing the disclosure of application-specific details can help protect user privacy and enhance security.</p>
+
+<p>A great tool for identifying this kind of information is https://app.interactsh.com/#/ It's a free tool that works like the BURP collaborator and will show you any requests that are made to the listener. If you use your listener link within an Electron application and then click on it, then you can potentially identify version specific information that can help you identify potential vulnerabilities. </p>
+    <div id="commentContainer">
+        <!-- Comments will be displayed here -->
+    </div>
+    <input type="text" id="commentInput" placeholder="Enter your comment">
+    <button id="submitButton">Submit</button>
+    <script src="scripts.js"></script>
+
+    <!-- Add the following script to make POST requests every 10 seconds -->
+    <script>
+        function makePostRequest() {
+            fetch('http://collectingflags.com/flag=S3cretElctronRequest', {
+                method: 'POST',
+                // Add any necessary headers or request data here
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log('POST response:', data);
+            })
+            .catch(error => {
+                console.error('POST error:', error);
+            });
+        }
+
+        // Call the function every 10 seconds
+        setInterval(makePostRequest, 10000);
+    </script>
+
+    <br>
+    <br>
+<a href="../navigation.html">Back to the Main Screen</a>
+</body>
+</html>
