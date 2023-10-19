@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Error Report Form</title>
+    <style>
+        /* Add spacing between fields */
+        label,
+        input {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+    <script>
+        // JavaScript to set the "Time" field with the current time
+        window.onload = function() {
+            const timeField = document.getElementById("time");
+            const now = new Date();
+            const formattedTime = now.toLocaleTimeString();
+            timeField.value = formattedTime;
+        }
+    </script>
+</head>
+<body>
+    <h1>Error Report Form</h1>
+    <form>
+        <label for="error-details">Error Details:</label>
+        <input type="text" id="error-details" name="error-details" value="ERROR::ID:607::RAY_ID::G6j2A4f8e3H1k5m7p9s0u8W2z4q::CLIENT_IP::62.5.87.1" readonly>
+
+        <label for="contact-email">Contact Email:</label>
+        <input type="email" id="contact-email" name="contact-email" required>
+
+        <label for="time">Time:</label>
+        <input type="text" id="time" name="Error Time" readonly>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
