@@ -16,6 +16,14 @@
         max-width: 600px;
         margin: 0 auto;
         text-align: center;
+        display: flex; /* Use flexbox for layout */
+        justify-content: center; /* Center items horizontally */
+        align-items: center; /* Center items vertically */
+        flex-wrap: wrap; /* Allow items to wrap */
+      }
+
+      .email-provider {
+        margin: 20px;
       }
 
       h1 {
@@ -26,7 +34,7 @@
       p {
         font-size: 18px;
         line-height: 1.6;
-        margin-bottom: 30px;
+        margin-bottom: 10px;
       }
 
       /* Button style */
@@ -49,11 +57,15 @@
   <body>
     <div class="container">
       <h1>Welcome to Step 2 👋</h1>
-<p>We will need to know who your email provider is. If you don't know, then select 'other'</p>
-      <p>Outlook</p>
-    <img src="https://itssixtyn3in.github.io/mailmove/icons/outlook.png" height=50px width=50px></img>
-       <p>Gmail</p>
-    <img src="https://itssixtyn3in.github.io/mailmove/icons/gmail.png" height=50px width=50px></img>
+      <p>We will need to know who your email provider is. If you don't know, then select 'other'</p>
+      <div class="email-provider">
+        <p>Outlook</p>
+        <img src="https://itssixtyn3in.github.io/mailmove/icons/outlook.png" height="50px" width="50px" />
+      </div>
+      <div class="email-provider">
+        <p>Gmail</p>
+        <img src="https://itssixtyn3in.github.io/mailmove/icons/gmail.png" height="50px" width="50px" />
+      </div>
     </div>
 
     <!-- Your JavaScript code for migration steps can go here -->
