@@ -16,14 +16,16 @@
         max-width: 600px;
         margin: 0 auto;
         text-align: center;
-        display: flex; /* Use flexbox for layout */
-        justify-content: center; /* Center items horizontally */
-        align-items: center; /* Center items vertically */
-        flex-wrap: wrap; /* Allow items to wrap */
       }
 
       .email-provider {
-        margin: 20px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .email-provider img {
+        margin-left: 10px;
       }
 
       h1 {
@@ -31,44 +33,68 @@
         margin-bottom: 20px;
       }
 
+      .box {
+        width: 100px;
+        height: 35px;
+        background-color: #3498db;
+        color: white;
+        text-align: center;
+        line-height: 100px;
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+      }
+
+      .spacer {
+        margin-bottom: 20px; /* Adds space below each div */
+      }
+
       p {
         font-size: 18px;
-        line-height: 1.6;
-        margin-bottom: 10px;
-      }
-
-      /* Button style */
-      .start-button {
-        padding: 10px 20px;
-        font-size: 20px;
-        background-color: #fff;
-        color: #3498db; /* Blue text on white background */
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-
-      .start-button:hover {
-        background-color: #f2f2f2; /* Lighter background on hover */
+        margin-bottom: 5px;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>Welcome to Step 2 👋</h1>
-      <p>We will need to know who your email provider is. If you don't know, then select 'other'</p>
-
+      <h1>What we need to move 💪</h1>
+  <div class="box spacer"></div>
+      <div class="container">
+        <p>Do you use any of the following?</p>
+      </div>
       <!-- Images for Outlook and Gmail -->
       <div class="email-provider">
-        <p>Outlook</p><input type="checkbox" id="outlookCheckbox" name="emailProvider" value="outlook">
-        <img src="https://itssixtyn3in.github.io/mailmove/icons/outlook.png" height="50px" width="50px" />
-      </div>
-      <div class="email-provider">
-        <p>Gmail</p><input type="checkbox" id="gmailCheckbox" name="emailProvider" value="gmail">
-        <img src="https://itssixtyn3in.github.io/mailmove/icons/gmail.png" height="50px" width="50px" />
-      </div>
-      
 
+<table align=center>
+  <tr>
+    <td><p><input type="checkbox" id="outlookCheckbox" name="emailProvider" value="outlook">Outlook</p></td>
+    <td><img src="https://itssixtyn3in.github.io/mailmove/icons/outlook.png" height="50px" width="50px" /></td>
+<td>  </td>
+    <td><p><input type="checkbox" id="gmailCheckbox" name="emailProvider" value="outlook">Gmail</p></td>
+    <td><img src="https://itssixtyn3in.github.io/mailmove/icons/gmail.png" height="50px" width="50px" /></td>
+  </tr>
+</table>
+    
+      </div>
+    <div class="box spacer"></div>
+      <div class="container">
+        <p>Do you use any file backup solution?</p>
+      </div>
+      <!-- Images for OneDrive, Google Drive, and Dropbox -->
+      <div class="email-provider">
+<table align=center>
+  <tr>
+    <td><p><input type="checkbox" id="oneDriveCheckbox" name="fileProvider" value="OneDrive">OneDrive</p><p></td>
+    <td><img src="https://itssixtyn3in.github.io/mailmove/icons/onedrive.png" height="50px" width="60px" /></td>
+    <td><p><input type="checkbox" id="googledriveCheckbox" name="fileProvider" value="Google Drive">Google Drive</p></td>
+    <td><img src="https://itssixtyn3in.github.io/mailmove/icons/googledrive.png" height="50px" width="50px" /></td>
+  </tr>
+  <tr>
+    <td><p><input type="checkbox" id="dropboxCheckbox" name="fileProvider" value="DropBox">Dropbox</p></td>
+    <td><img src="https://itssixtyn3in.github.io/mailmove/icons/dropbox.png" height="50px" width="50px" /></td>
+  </tr>
+</table>
+
+      </div>
+    </div>
   </body>
 </html>
