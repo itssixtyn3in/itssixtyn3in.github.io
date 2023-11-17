@@ -58,52 +58,17 @@
     <div class="container">
       <h1>Welcome to Step 2 👋</h1>
       <p>We will need to know who your email provider is. If you don't know, then select 'other'</p>
-      
-      <!-- Checkboxes for selecting email provider -->
-      <div class="checkbox-container">
-        <div class="checkbox-item">
-          <input type="checkbox" id="outlookCheckbox" name="emailProvider" value="outlook">
-          <label for="outlookCheckbox">Outlook</label>
-        </div>
-        <div class="checkbox-item">
-          <input type="checkbox" id="gmailCheckbox" name="emailProvider" value="gmail">
-          <label for="gmailCheckbox">Gmail</label>
-        </div>
-      </div>
-      
+
       <!-- Images for Outlook and Gmail -->
       <div class="email-provider">
-        <p>Outlook</p>
+        <p>Outlook</p><input type="checkbox" id="outlookCheckbox" name="emailProvider" value="outlook">
         <img src="https://itssixtyn3in.github.io/mailmove/icons/outlook.png" height="50px" width="50px" />
       </div>
       <div class="email-provider">
-        <p>Gmail</p>
+        <p>Gmail</p><input type="checkbox" id="gmailCheckbox" name="emailProvider" value="gmail">
         <img src="https://itssixtyn3in.github.io/mailmove/icons/gmail.png" height="50px" width="50px" />
       </div>
       
-      <!-- Button to start migration -->
-      <button class="start-button" onclick="startMigration()">Start Migration</button>
-    </div>
 
-    <!-- Your JavaScript code for migration steps can go here -->
-    <script>
-      function startMigration() {
-        // Retrieving the selected email provider(s)
-        const outlookCheckbox = document.getElementById('outlookCheckbox');
-        const gmailCheckbox = document.getElementById('gmailCheckbox');
-        
-        const selectedProviders = [];
-        if (outlookCheckbox.checked) {
-          selectedProviders.push(outlookCheckbox.value);
-        }
-        if (gmailCheckbox.checked) {
-          selectedProviders.push(gmailCheckbox.value);
-        }
-
-        // Add your code to start the migration process here
-        console.log('Selected Email Providers:', selectedProviders);
-        // Add your logic to proceed with the migration process
-      }
-    </script>
   </body>
 </html>
