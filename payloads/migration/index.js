@@ -1,26 +1,32 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path');
+const fs = require('fs');
 
-const createWindow = () => {
-  const win = new BrowserWindow({
+let mainWindow;
+
+function createWindow() {
+  mainWindow = new BrowserWindow({
     width: 800,
-    height: 600
-  })
+    height: 600,
+    frame: false, // Create a frameless window
+    backgroundColor: '#ffffff',
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      sandbox: false,
+      autoHideMenuBar: true,
+      nodeIntegrationInSubFrames: false,
+      preload: path.join(__dirname, 'preload.js'),
+      nativeWindowOpen: true,
+      enableRemoteModule: false,
+      spellcheck: true
+    },
+  });
 
-  win.loadFile('index.html')
+
+  mainWindow.loadFile('index.html');
+
+  // Rest of your Electron app initialization
 }
 
-app.whenReady().then(() => {
-  createWindow()
-
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow()
-    }
-  })
-})
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
-})
+app.whenReady().then(createWindow);
