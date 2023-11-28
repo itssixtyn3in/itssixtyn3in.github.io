@@ -7,7 +7,8 @@ let mainWindow;
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
-    height: 900,
+    height: 600,
+    frame: false, // Create a frameless window
     backgroundColor: '#ffffff',
     title: 'ElectroPwn',
     webPreferences: {
