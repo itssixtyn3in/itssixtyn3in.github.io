@@ -15,7 +15,7 @@
   <main>
     <div class="login-form">
       <h2>Login</h2>
-      <form action="http://127.0.0.1" method="POST">
+      <form id="loginForm">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
 
@@ -28,5 +28,27 @@
       <!-- Placeholder for OAuth login buttons -->
     </div>
   </main>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submission behavior
+
+      // Get form data
+      const formData = new FormData(this);
+
+      fetch('https://127.0.0.1', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        // Handle the response as needed
+        console.log('Request sent successfully!');
+      })
+      .catch(error => {
+        // Handle errors
+        console.error('Error:', error);
+      });
+    });
+  </script>
 </body>
 </html>
