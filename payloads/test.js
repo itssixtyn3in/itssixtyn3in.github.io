@@ -65,43 +65,42 @@ console.log("Make a choice from these options");
 
 function updatePackageJson() {
     try {
-        if (!fs.existsSync('package.json')) {
-            const basicPackageJson = {
-                "name": "your-app-name",
-                "version": "1.0.0",
-                "description": "Your app description",
-                "main": "index.js",
-                "scripts": {
-                    "start": "electron ."
-                },
-                "author": "Your Name",
-                "license": "MIT"
-            };
-            fs.writeFileSync('package.json', JSON.stringify(basicPackageJson, null, 2));
-            console.log('Created a basic package.json file.\n');
+        let packageJson = {};
+
+        if (fs.existsSync('package.json')) {
+            const content = fs.readFileSync('package.json', 'utf8').trim();
+            packageJson = content ? JSON.parse(content) : {};
         }
 
-        let content = fs.readFileSync('package.json', 'utf8').trim();
-        if (!content) {
-            const basicPackageJson = {
-                "name": "your-app-name",
-                "version": "1.0.0",
-                "description": "Your app description",
-                "main": "index.js",
-                "scripts": {
-                    "start": "electron ."
-                },
-                "author": "Your Name",
-                "license": "MIT"
-            };
-            fs.writeFileSync('package.json', JSON.stringify(basicPackageJson, null, 2));
-            console.log('Filled an empty package.json file with a basic structure.\n');
-        } else {
-            let packageJson = JSON.parse(content);
-            packageJson.scripts.start = 'electron .';
-            fs.writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
-        }
+        packageJson.name = "your-app-name";
+        packageJson.version = "1.0.0";
+        packageJson.main = "index.js";
+        packageJson.scripts = {
+            "start": "electron .",
+            "test": "echo \"Error: no test specified\" && exit 1",
+            "package": "electron-forge package",
+            "make": "electron-forge make"
+        };
 
+        // Update or add author and description fields
+        packageJson.author = "Real Author";
+        packageJson.description = "The app description";
+
+        packageJson.license = "MIT";
+        packageJson.devDependencies = {
+            "@electron-forge/cli": "^7.0.0",
+            "@electron-forge/maker-deb": "^7.0.0",
+            "@electron-forge/maker-rpm": "^7.0.0",
+            "@electron-forge/maker-squirrel": "^7.0.0",
+            "@electron-forge/maker-zip": "^7.0.0",
+            "@electron-forge/plugin-auto-unpack-natives": "^7.0.0",
+            "electron": "^27.1.0"
+        };
+        packageJson.dependencies = {
+            "electron-squirrel-startup": "^1.0.0"
+        };
+
+        fs.writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
         console.log('package.json updated successfully.\n');
         console.log('Attempting Electron install..\n');
         installElectron();
@@ -113,7 +112,10 @@ function updatePackageJson() {
 function installElectron() {
     try {
         execSync('npm install electron --save-dev', { stdio: 'inherit' });
-        execSync('npm run start', { stdio: 'inherit' });
+        //execSync('npm run start', { stdio: 'inherit' });
+	execSync('npm install --save-dev @electron-forge/cli', { stdio: 'inherit' });
+	execSync('npx electron-forge import', { stdio: 'inherit' });
+execSync('npm run make', { stdio: 'inherit' });
     } catch (error) {
         console.error('Error installing/running Electron:', error);
     }
