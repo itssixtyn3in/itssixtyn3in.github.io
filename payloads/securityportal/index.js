@@ -10,11 +10,11 @@ function createWindow() {
     height: 600,
     frame: false, // Create a frameless window
     backgroundColor: '#ffffff',
-    title: 'ElectroPwn',
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
       sandbox: false,
+      autoHideMenuBar: true,
       nodeIntegrationInSubFrames: false,
       preload: path.join(__dirname, 'preload.js'),
       nativeWindowOpen: true,
