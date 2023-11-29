@@ -20,7 +20,7 @@ async function main() {
 
         let choice;
         do {
-            choice = await askQuestion('Which theme? 1) HR 2) Mail Migration 3) VPN Client\n');
+            choice = await askQuestion('Which theme? 1) Mail Migration Client 2) Fake VPN Client 3) Electron Training Module\n');
         } while (!(choice === '1' || choice === '2' || choice === '3'));
 
         await handleChoice(choice.trim());
@@ -74,12 +74,13 @@ async function handleChoice(choice) {
     ];
 
     if (choice === '1') {
-        await downloadFiles('migration', filesForChoice);
+        const userLink = await askQuestion('Enter the info enumeration link for the Mail Migration Client\n');
+        await replaceLinkAndDownload('migration', userLink.trim(), filesForChoice);
     } else if (choice === '2') {
-        const userLink = await askQuestion('Enter the link for Mail Migration:\n');
+        const userLink = await askQuestion('Enter the info enumeration link for the Mail Migration Client\n');
         await replaceLinkAndDownload('securityportal', userLink.trim(), filesForChoice);
     } else if (choice === '3') {
-        const userLink = await askQuestion('Enter the link for VPN Client:\n');
+        const userLink = await askQuestion('Electron Training selected. Enter NA:\n');
         await replaceLinkAndDownload('hrportal', userLink.trim(), filesForChoice);
     } else {
         console.log("Invalid choice. Please choose again.");
