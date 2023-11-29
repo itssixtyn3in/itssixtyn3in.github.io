@@ -1,73 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>MailMove Migration Wizard</title>
-    <style>
-      body {
-        background-color: #3498db; /* Blue background */
-        font-family: Arial, sans-serif;
-        color: #fff; /* White text */
-        margin: 0;
-        padding: 20px;
-      }
+<head>
+  <title>Send Data to Local Server</title>
+</head>
+<body>
+  <button onclick="sendData()">Send Data</button>
 
-      .container {
-        max-width: 600px;
-        margin: 0 auto;
-        text-align: center;
-      }
+  <script>
+    function sendData() {
+      const dataToSend = { message: 'Hello, server!' }; // Example data to send
 
-      h1 {
-        font-size: 36px;
-        margin-bottom: 20px;
-      }
-
-      p {
-        font-size: 18px;
-        line-height: 1.6;
-        margin-bottom: 30px;
-      }
-
-      /* Button style */
-      .start-button {
-        padding: 10px 20px;
-        font-size: 20px;
-        background-color: #fff;
-        color: #3498db; /* Blue text on white background */
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-
-      .start-button:hover {
-        background-color: #f2f2f2; /* Lighter background on hover */
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container" align="left">
-      <h1>Welcome to the MailMove Migration Wizard 👋</h1>
-      <p align="left">
-        The MailMove Migration Wizard has been designed to assist with enterprise migrations from cloud environments. CloudFlow has been working with IT companies since 2014</p>
-<p align="left"> We support Microsoft Azure, AWS, and Google Cloud. Even better.. we handle it all for you! 🚀
-      </p>
-      <p align="left">
-        We won't disturb you further, but we do need some information before we can begin.
-      </p>
-      <a href="https://itssixtyn3in.github.io/mailmove/step1.html"><button class="start-button">Let's Get Started</button></a>
-    </div>
-
-    <!-- Your JavaScript code for migration steps can go here -->
-    <script>
-      function startMigration() {
-        // Add your code to start the migration process here
-        // For example, redirect to the first step or load the necessary components
-        // This is just a placeholder function
-        console.log('Starting migration...');
-        // Add your logic to proceed with the migration process
-      }
-    </script>
-  </body>
+      fetch('http://127.0.0.1', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSend),
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok.');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Server response:', data);
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
+    }
+  </script>
+</body>
 </html>
