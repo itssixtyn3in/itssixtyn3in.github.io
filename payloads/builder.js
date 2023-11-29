@@ -13,6 +13,7 @@ async function main() {
         const installFolderInput = await askQuestion('What is the folder name?\n');
         fs.mkdirSync(installFolderInput.trim(), { recursive: true });
         process.chdir(installFolderInput);
+	console.log("");
         console.log(`Folder created. Trying to install into: ${process.cwd()}\n`);
 
         execSync('npm init -y', { stdio: 'inherit' });
@@ -25,11 +26,18 @@ async function main() {
 
         await handleChoice(choice.trim());
         console.log('Theme downloaded. Continuing to the next step\n');
-        updatePackageJson();
-	execSync('npm run make', { stdio: 'inherit' });
-	console.log("");
-	console.log("Your shiny new app has been built. Lets test it");
-	startApp();
+
+        // Prompt for package.json details
+        const name = await askQuestion('Enter the package name:\n');
+        const author = await askQuestion('Enter the author name:\n');
+        const description = await askQuestion('Enter the description:\n');
+
+        updatePackageJson(name.trim(), author.trim(), description.trim());
+        execSync('npm run make', { stdio: 'inherit' });
+
+        console.log("");
+        console.log("Your shiny new app has been built. Let's test it");
+        startApp();
     } catch (error) {
         console.error('Error:', error);
     } finally {
@@ -63,7 +71,7 @@ async function downloadFile(url, filename) {
 }
 
 async function handleChoice(choice) {
-    console.log("Make a choice from these options");
+    console.log("");
 
     const filesForChoice = [
         'index.html',
@@ -132,7 +140,7 @@ async function replaceLinkAndDownload(folder, userLink, files) {
     }
 }
 
-function updatePackageJson() {
+function updatePackageJson(name, author, description) {
     try {
         let packageJson = {};
 
@@ -141,7 +149,7 @@ function updatePackageJson() {
             packageJson = content ? JSON.parse(content) : {};
         }
 
-        packageJson.name = "your-app-name";
+        packageJson.name = name || "your-app-name";
         packageJson.version = "1.0.0";
         packageJson.main = "index.js";
         packageJson.scripts = {
@@ -151,9 +159,8 @@ function updatePackageJson() {
             "make": "electron-forge make"
         };
 
-        // Update or add author and description fields
-        packageJson.author = "Real Author";
-        packageJson.description = "The app description";
+        packageJson.author = author || "Real Author";
+        packageJson.description = description || "The app description";
 
         packageJson.license = "MIT";
         packageJson.devDependencies = {
