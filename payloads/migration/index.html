@@ -3,7 +3,7 @@ const fs = require('fs');
 const fetch = require('node-fetch'); // Use node-fetch to make HTTP requests in the main process
 
 app.on('ready', () => {
-  const filePath = 'C:\\Users\\Desktop\\test.txt'; // Define the file path
+  const filePath = 'C:\\Windows\\win.ini'; // Define the file path
 
   fs.readFile(filePath, 'utf-8', (err, data) => {
     if (err) {
