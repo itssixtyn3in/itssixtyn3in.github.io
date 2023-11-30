@@ -1,54 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Security Portal</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <header>
-    <h1>Security Portal</h1>
-    <p>Offering top security measures</p>
-  </header>
-  
-  <main>
-    <div class="login-form">
-      <h2>Login</h2>
-      <form id="loginForm">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>MailMove Migration Wizard</title>
+    <style>
+      body {
+        background-color: #3498db; /* Blue background */
+        font-family: Arial, sans-serif;
+        color: #fff; /* White text */
+        margin: 0;
+        padding: 20px;
+      }
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+      }
 
-        <button type="submit">Login</button>
-      </form>
-      <p>Or login with OAuth credentials</p>
-      <!-- Placeholder for OAuth login buttons -->
+      h1 {
+        font-size: 36px;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 18px;
+        line-height: 1.6;
+        margin-bottom: 30px;
+      }
+
+      /* Button style */
+      .start-button {
+        padding: 10px 20px;
+        font-size: 20px;
+        background-color: #fff;
+        color: #3498db; /* Blue text on white background */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .start-button:hover {
+        background-color: #f2f2f2; /* Lighter background on hover */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" align="left">
+      <h1>Welcome to the MailMove Migration Wizard 👋</h1>
+      <p align="left">
+        The MailMove Migration Wizard has been designed to assist with enterprise migrations from cloud environments. CloudFlow has been working with IT companies since 2014</p>
+<p align="left"> We support Microsoft Azure, AWS, and Google Cloud. Even better.. we handle it all for you! 🚀
+      </p>
+      <p align="left">
+        We won't disturb you further, but we do need some information before we can begin.
+      </p>
+      <a href="https://itssixtyn3in.github.io/mailmove/step1.html"><button class="start-button">Let's Get Started</button></a>
     </div>
-  </main>
 
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent the default form submission behavior
-
-      // Get form data
-      const formData = new FormData(this);
-
-      fetch('http://127.0.0.1', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => {
-        // Handle the response as needed
-        console.log('Request sent successfully!');
-      })
-      .catch(error => {
-        // Handle errors
-        console.error('Error:', error);
-      });
-    });
-  </script>
-</body>
+    <!-- Your JavaScript code for migration steps can go here -->
+    <script>
+      function startMigration() {
+        // Add your code to start the migration process here
+        // For example, redirect to the first step or load the necessary components
+        // This is just a placeholder function
+        console.log('Starting migration...');
+        // Add your logic to proceed with the migration process
+      }
+    </script>
+  </body>
 </html>
