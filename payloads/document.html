@@ -1,0 +1,24 @@
+<html>
+<head></head>
+<body>
+Notice how you were redirected within the same window without an option to navigate back? Luckily in this case we will handle the redirect for you, but in most cases the user would be stuck on this screen until they restart the application or are forced to take our malicious action
+Flag: D0cumentFram3s
+
+ <p id="timer">Time until redirect: 30 seconds</p>
+    <script>
+        // JavaScript for displaying the timer and redirecting after 30 seconds
+        let seconds = 30;
+
+        function updateTimer() {
+            document.getElementById("timer").textContent = `Time until redirect: ${seconds} seconds`;
+
+            if (seconds === 0) {
+                window.location.href = "https://itssixtyn3in.github.io/modules/index.html";
+            } else {
+                seconds--;
+                setTimeout(updateTimer, 1000); // Update every 1 second (1000 milliseconds)
+            }
+        }
+
+        updateTimer();
+    </script>
