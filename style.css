@@ -1,49 +1,62 @@
-/* Style the comment container */
-#commentContainer {
-    background-color: #F8D0BDff; /* Warm orange background color */
+/* General styling */
+body {
     font-family: Arial, sans-serif;
+    background-color: #F8D0BD; /* Background color of the comment boxes */
+    margin: 0;
+    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 25vh; /* 25% of the original height */
-    margin: 0;
-    padding: 0;
-    max-width: 600px; /* You can adjust this as needed */
+    height: 100vh; /* Full viewport height */
+}
+
+/* Style the comment container */
+#commentContainer {
+    background-color: #F8D0BD; /* Same as the comment section */
+    border: 2px solid #000; /* Black border */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    width: 80%; /* Adjust as needed */
+    max-width: 600px; /* Limit the maximum width */
+    margin-top: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Style individual comments */
 .comment {
-    background-color: transparent; /* Transparent background */
-    border: 1px solid #000; /* Thin black border */
+    background-color: #FFFFFF; /* White background */
+    border: 2px solid #000; /* Black border */
     border-radius: 10px;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Box shadow for container */
-    text-align: center;
-    margin: 0 auto;
-    max-width: 600px;
-    margin-bottom: 10px;
-    color: #000000; /* White font color */
+    margin-bottom: 20px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    box-sizing: border-box; /* Include padding and border in the width */
+    word-wrap: break-word; /* Allow long words to break and wrap */
 }
 
 /* Style the input field and submit button */
 #commentInput {
-    width: 100%;
+    width: calc(100% - 22px); /* Adjust width considering padding and border */
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #000; /* Thin black border */
+    border: 2px solid #000; /* Black border */
     border-radius: 5px;
-    color: #000000; /* White font color */
 }
 
 #submitButton {
-    background-color: #F8D0BDff; /* Orange */
-    color: #000000; /* White font color */
+    background-color: #F8D0BD; /* Orange */
+    color: #000000; /* Black font color */
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition */
 }
 
 #submitButton:hover {
-    background-color: #F8D0BDff; /* Darker orange on hover */
+    background-color: #E8B5A0; /* Darker orange on hover */
 }
